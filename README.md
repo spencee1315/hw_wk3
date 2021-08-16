@@ -91,48 +91,102 @@ You are required to submit the following for review:
 - - -
 © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
 
-# Code Quiz - Homework 4, UW Coding Bootcamp
+
+# 03 JavaScript: Password Generator
+
+## Your Task
+
+This week’s homework requires you to modify starter code to create an application that enables employees to generate random passwords based on criteria that they’ve selected. This app will run in the browser and will feature dynamically updated HTML and CSS powered by JavaScript code that you write. It will have a clean and polished, responsive user interface that adapts to multiple screen sizes.
+
+The password can include special characters. If you’re unfamiliar with these, see this [list of password special characters](https://www.owasp.org/index.php/Password_special_characters) from the OWASP Foundation.
+
+
+# Password Generator - Homework 3, UW Coding Bootcamp
 
 ## Description
 
-For the fourth week of the UW Coding Bootcamp my homework invited me to build a timed coding quiz with multiple-choice questions. The app I built runs in the browser and features dynamically updated HTML and CSS powered by JavaScript code. It has a clean, polished, and responsive user interface and includes a count down timer, a results page to save your score, and a highscores page which will track the top 5 heighest scores using local storage.
+For the third week of the UW Coding Bootcamp my homework invited me to build a password generator that enables employees to generate random passowrds based on criteria that they've selected. The app I built runs in the browser and features dynamically updated HTML and CSS powered by JavaScript code. It has a clean, polished, and responsive user interface that adapts to multiple screen sizes. It allows the user to select the length and character types of the password they would like to generate and will then allow the user to copy it to the clipboard. 
 
 ## Built With
 
-* [HTML](https://github.com/spencee1315/hw_wk4)
+* [GitHub](https://github.com/spencee1315/hw_wk3)
+* [Net Comber](https://www.net-comber.com/charset.html)
 
 ## Deployed Link
 
-* [See Live Site](https://spencee1315.github.io/hw_wk4/)
+* [See Live Site](https://spencee1315.github.io/hw_wk3/)
 
 ## Preview of Working Site
 
-![Image1](./Assets/homepage.png)
-![Image2](./Assets/gamepage.png)
-![Image3](./Assets/resultspage.png)
-![Image4](./Assets/leaderboard.png)
+![Image1](./Assets/PwGenerator_1.png)
 
 ## Code Snippet
 This code snippet...........
 
 ```javascript 
+// Generate password function
+function generatePassword(lower, upper, number, symbol, length) {
+  // 1. init pw var
+  // 2. Filter out unchecked types
+  // 3. Loop over length call generator function for each type
+  // 4. Add final pw to the pw var and return it
 
-// Timer - will load on page load (once the start button is clicked on the index page) and start the countdown of the first question
-// Global Variable, setting outside timer function to call it in the getNewQuestion function
-let sec 
-function timer(){
-    sec = 10;
-    const timer = setInterval(function(){
-        sec--;
-        document.getElementById('timer-count').innerHTML=''+sec;
-        if (sec < 0) {
-            // Advances to new question at -1, so zero will populate on screen
-            getNewQuestion();
-        }
-    }, 1000);
+  let generatedPassword = '';
+
+  // need to be able to count number of checked items
+
+  const typesCount = lower + upper + number + symbol;
+
+  console.log('typesCount: ', typesCount);
+
+  const typesArr = [{ lower }, { upper }, { number }, { symbol }].filter
+  (
+    item => Object.values(item)[0]
+  );
+
+  // console.log('typesArr: ', typesArr);
+
+  // pt. 2 
+    if(typesCount === 0) {
+      return '';
+    }
+
+  // pt. 3
+    for(let i = 0; i < length; i += typesCount) {
+      typesArr.forEach(type => {
+        const funcName = Object.keys(type)[0];
+        // console.log('funcName: ', funcName);
+
+        generatedPassword += randomFunc[funcName]();
+      });
+    }
+
+    console.log(generatedPassword.slice(0, length));
+
+    const finalPassword =  generatedPassword.slice(0, length);
+
+    document.getElementById("password").innerHTML = finalPassword;
+
+    return finalPassword;
 }
 
-timer()
+//Generator functions - https://www.net-comber.com/charset.html
+function getRandomLower() {
+  return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+}
+
+function getRandomUpper() {
+  return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+}
+
+function getRandomNumber() {
+  return String.fromCharCode(Math.floor(Math.random() * 10) + 48);
+}
+
+function getRandomSymbol() {
+  const symbols = '!@#$%^&*(){}[]=+_-|?<>/<>,.'
+  return symbols[Math.floor(Math.random() * symbols.length)];
+}
 ```
 
 ### Authors
